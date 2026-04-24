@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login | Social Service</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+}
+
+/* LOGIN BOX */
+.login-box{
+    width:320px;
+    padding:40px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    text-align:center;
+    color:white;
+    animation: fadeIn 1s ease;
+}
+
+.login-box h2{
+    margin-bottom:5px;
+}
+
+.login-box p{
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* INPUTS */
+.login-box input{
+    width:100%;
+    padding:12px;
+    margin:12px 0;
+    border:none;
+    border-radius:8px;
+    outline:none;
+}
+
+/* BUTTON */
+.login-box button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:25px;
+    background:#00f7ff;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.login-box button:hover{
+    transform:scale(1.05);
+}
+
+/* LINKS */
+.login-box a{
+    color:#00f7ff;
+    text-decoration:none;
+    font-size:13px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:400px){
+    .login-box{
+        width:90%;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Welcome Back</h2>
+    <p>Login to continue</p>
+
+    <input type="email" placeholder="Email" required>
+    <input type="password" placeholder="Password" required>
+
+    <a href="service.html"><button>Login</button></a>
+
+    <p style="margin-top:15px;">
+        <a href="index.html">Register now</a><br>
+        
+    </p>
+</div>
+
+</body>
+</html>

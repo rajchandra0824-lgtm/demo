@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Services | Social Service</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* BODY */
+body{
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 10%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+}
+
+header h1{
+    color:#00f7ff;
+}
+
+header a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+/* SERVICES SECTION */
+.services{
+    padding:80px 10%;
+    text-align:center;
+}
+
+.services h2{
+    font-size:2.5rem;
+    margin-bottom:15px;
+    color:#00f7ff;
+}
+
+.services p{
+    margin-bottom:50px;
+    opacity:0.8;
+}
+
+/* GRID */
+.service-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap:30px;
+    justify-content:center;
+}
+
+
+/* CARD */
+.card{
+    padding:30px 20px;
+    border-radius:20px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    transition:0.4s;
+    position:relative;
+    overflow:hidden;
+    animation: fadeUp 1s ease;
+}
+
+/* GLOSSY SHINE */
+.card::before{
+    content:"";
+    position:absolute;
+    top:-50%;
+    left:-50%;
+    width:200%;
+    height:200%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+    transform: rotate(25deg);
+}
+
+.card:hover::before{
+    left:100%;
+    transition:0.6s;
+}
+
+/* HOVER */
+.card:hover{
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0,247,255,0.4);
+}
+.card-link{
+    cursor:pointer;
+}
+.card-link:hover .card{
+    transform: translateY(-15px) scale(1.05);
+}
+
+/* TEXT */
+.card h3{
+    margin-bottom:10px;
+    color:#00f7ff;
+}
+
+.card p{
+    font-size:0.95rem;
+    opacity:0.9;
+}
+.card-link{
+    text-decoration:none;
+    color:white;
+    display:block;   /* 🔥 IMPORTANT */
+}
+.card-link:active .card{
+    transform: scale(0.97);
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:20px;
+    background: rgba(255,255,255,0.1);
+    margin-top:60px;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width:992px){
+    .service-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:500px){
+    header{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .service-grid{
+        grid-template-columns:1fr;
+    }
+
+    .services h2{
+        font-size:2rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Public EYE</h1>
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="services">
+    <h2>Our Services</h2>
+    <p>We work for a better and healthier society</p>
+
+    <div class="service-grid">
+
+<a href="complaint.html" class="card-link">
+    <div class="card">
+        <h3>New Complaint</h3>
+        <p>Any issue in your area</p>
+    </div>
+</a>
+
+<a href="status.html" class="card-link">
+    <div class="card">
+        <h3>Complaint Status</h3>
+        <p>Track your complaint</p>
+    </div>
+</a>
+
+<a href="my-complaints.html" class="card-link">
+    <div class="card">
+        <h3>My Complaints</h3>
+        <p>Check all your complaints</p>
+    </div>
+</a>
+
+</div>
+</section>
+
+<footer>
+    © 2026 SocialCare | Social Service Project
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+/* HEADER */
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+}
+
+header h2{
+    color:#00f7ff;
+}
+
+/* SUMMARY */
+.summary{
+    display:flex;
+    justify-content:space-around;
+    margin:20px;
+    flex-wrap:wrap;
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    width:180px;
+    margin:10px;
+}
+
+/* TABLE */
+table{
+    width:95%;
+    margin:auto;
+    border-collapse:collapse;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th, td{
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#00f7ff;
+    color:black;
+}
+
+tr:nth-child(even){
+    background:rgba(255,255,255,0.05);
+}
+
+/* BUTTON */
+select{
+    padding:5px;
+    border-radius:5px;
+}
+
+button{
+    padding:5px 10px;
+    border:none;
+    border-radius:10px;
+    background:#00f7ff;
+    cursor:pointer;
+}
+
+/* STATUS COLORS */
+.pending{color:#ff4d4d;}
+.progress{color:#ffc107;}
+.solved{color:#28a745;}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Admin Dashboard</h2>
+    <button onclick="logout()">Logout</button>
+</header>
+
+<!-- SUMMARY -->
+<div class="summary">
+    <div class="box">Total<br><span id="total">0</span></div>
+    <div class="box">Solved<br><span id="solved">0</span></div>
+    <div class="box">Pending<br><span id="pending">0</span></div>
+</div>
+
+<!-- TABLE -->
+<table>
+<thead>
+<tr>
+    <th>ID</th>
+    <th>PIN</th>
+    <th>Description</th>
+    <th>Status</th>
+    <th>Update</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+</table>
+
+<script>
+// simple security
+if(!localStorage.getItem("adminLogin")){
+    window.location.href = "admin-login.html";
+}
+// LOAD DATA
+function loadComplaints(){
+
+fetch("http://localhost:3000/allComplaints")
+.then(res=>res.json())
+.then(data=>{
+
+let total = data.length;
+let solved = 0;
+let pending = 0;
+
+let table = document.getElementById("tableBody");
+table.innerHTML = "";
+
+data.forEach(c=>{
+
+let statusClass = "";
+
+if(c.status === "Solved"){
+    solved++;
+    statusClass="solved";
+}
+else if(c.status === "In Progress"){
+    statusClass="progress";
+}
+else{
+    pending++;
+    statusClass="pending";
+}
+
+table.innerHTML += `
+<tr>
+<td>${c.id}</td>
+<td>${c.pin}</td>
+<td>${c.description}</td>
+<td class="${statusClass}">${c.status}</td>
+
+<td>
+<select id="s${c.id}">
+<option>Pending</option>
+<option>In Progress</option>
+<option>Solved</option>
+</select>
+
+<button onclick="updateStatus(${c.id})">Update</button>
+</td>
+</tr>
+`;
+
+});
+
+document.getElementById("total").innerText = total;
+document.getElementById("solved").innerText = solved;
+document.getElementById("pending").innerText = pending;
+
+});
+}
+
+// UPDATE STATUS
+function updateStatus(id){
+
+let newStatus = document.getElementById("s"+id).value;
+
+fetch("http://localhost:3000/update/"+id,{
+method:"PUT",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({status:newStatus})
+})
+.then(res=>res.json())
+.then(()=>{
+alert("Updated Successfully");
+loadComplaints();
+});
+
+}
+
+// LOGOUT
+function logout(){
+    localStorage.removeItem("adminLogin"); // ✅ ADD
+ window.location.href="admin-login.html";
+}
+
+// INITIAL LOAD
+loadComplaints();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Complaint Status</title>
+
+<style>
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family:Arial;
+    color:white;
+}
+
+.container{
+    width:90%;
+    max-width:500px;
+    padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input{
+    padding:10px;
+    border:none;
+    border-radius:8px;
+}
+
+button{
+    padding:10px;
+    border:none;
+    border-radius:20px;
+    background:#00f7ff;
+    cursor:pointer;
+}
+
+.status-box{
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* COLORS */
+.pending{
+    background:#ff4d4d;
+}
+
+.progress{
+    background:#ffc107;
+    color:black;
+}
+
+.solved{
+    background:#28a745;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Check Complaint Status</h2>
+
+<input id="cid" placeholder="Enter Complaint ID">
+
+<button onclick="checkStatus()">Check Status</button>
+
+<div id="statusBox"></div>
+
+</div>
+
+<script>
+// 🔗 URL se ID lena
+let params = new URLSearchParams(window.location.search);
+let id = params.get("id");
+
+// Auto fill + auto check
+if(id){
+    document.getElementById("cid").value = id;
+    checkStatus();
+}
+function checkStatus(){
+
+let id = document.getElementById("cid").value;
+
+fetch("http://localhost:3000/status/"+id)
+.then(res=>res.json())
+.then(data=>{   
+let status = data.status;
+
+let box = document.getElementById("statusBox");
+
+if(status === "Pending"){
+    box.className = "status-box pending";
+    box.innerHTML = "Pending ❤️";
+}
+else if(status === "In Progress"){
+    box.className = "status-box progress";
+    box.innerHTML = "In Progress 💛";
+}
+else if(status === "Solved"){
+    box.className = "status-box solved";
+    box.innerHTML = "Solved 💚";
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Sign Up</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="left">
+        <h1>Join Us 🤝</h1>
+        <p>Together we can make a difference through social service.</p>
+    </div>
+
+    <div class="right">
+        <form id="signupForm">
+            <h2>Create Account</h2>
+
+            <div class="input-group">
+                <input type="text" id="name" required>
+                <label>Full Name</label>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" required>
+                <label>Password</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="confirmPassword" required>
+                <label>Confirm Password</label>
+            </div>
+
+            <button type="submit">Sign Up</button>
+            <p class="msg" id="message"></p>
+        </form>
+    </div>
+</div>
+
+<script src="script.js">
+    const form = document.getElementById("signupForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+        message.style.color = "red";
+        message.textContent = "❌ Passwords do not match!";
+    } else {
+        message.style.color = "green";
+        message.textContent = "✅ Sign Up Successful!";
+        form.reset();
+    }
+});
+
+</script>
+</body>
+</html>

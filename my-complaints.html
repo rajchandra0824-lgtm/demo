@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Complaints</title>
+
+<style>
+
+body{
+    min-height:100vh;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family:Arial;
+    color:white;
+    padding:20px;
+}
+
+/* HEADER */
+h2{
+    text-align:center;
+    color:#00f7ff;
+}
+
+/* SUMMARY BOX */
+.summary{
+    display:flex;
+    justify-content:space-around;
+    margin:20px 0;
+    flex-wrap:wrap;
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    width:150px;
+    margin:10px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+}
+
+.box:hover{
+    transform:scale(1.05);
+}
+
+/* GRID */
+.complaints{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:15px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.12);
+    padding:15px;
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+/* STATUS COLORS */
+.pending{color:#ff4d4d;}
+.progress{color:#ffc107;}
+.solved{color:#28a745;}
+
+</style>
+</head>
+
+<body>
+
+<h2>My Complaints</h2>
+
+<!-- SUMMARY -->
+<div class="summary">
+    <div class="box">Total<br><span id="total">0</span></div>
+    <div class="box">Solved<br><span id="solved">0</span></div>
+    <div class="box">Pending<br><span id="pending">0</span></div>
+</div>
+
+<!-- COMPLAINT LIST -->
+<div class="complaints" id="list"></div>
+
+<script>
+
+fetch("http://localhost:3000/allComplaints")
+.then(res=>res.json())
+.then(data=>{
+
+let total = data.length;
+let solved = 0;
+let pending = 0;
+
+let list = document.getElementById("list");
+
+data.forEach(c=>{
+
+    let statusClass = "";
+
+    if(c.status === "Solved"){
+        solved++;
+        statusClass = "solved";
+    }
+    else if(c.status === "In Progress"){
+        statusClass = "progress";
+    }
+    else{
+        pending++;
+        statusClass = "pending";
+    }
+
+    list.innerHTML += `
+    <div class="card">
+        <p><b>ID:</b> ${c.id}</p>
+        <p><b>PIN:</b> ${c.pin}</p>
+        <p><b>Status:</b> <span class="${statusClass}">${c.status}</span></p>
+        <p>${c.description}</p>
+    </div>
+    `;
+
+});
+
+document.getElementById("total").innerText = total;
+document.getElementById("solved").innerText = solved;
+document.getElementById("pending").innerText = pending;
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin OTP Login</title>
+
+<style>
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    font-family:Arial;
+    color:white;
+}
+
+.container{
+    width:350px;
+    padding:40px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+h2{
+    text-align:center;
+    color:#00f7ff;
+}
+
+input{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+}
+
+button{
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:#00f7ff;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+#otpBox{
+    display:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Admin Login</h2>
+
+    <input type="email" id="email" placeholder="Enter Gmail">
+    <input type="password" id="pass" placeholder="Password">
+
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <div id="otpBox">
+        <input type="number" id="otp" placeholder="Enter OTP">
+        <button onclick="verifyOTP()">Verify OTP</button>
+    </div>
+
+    <p id="msg"></p>
+</div>
+
+<script>
+
+let generatedOTP = "";
+
+function sendOTP(){
+
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("pass").value;
+
+    // basic check
+    if(email === "" || pass === ""){
+        alert("Fill all fields");
+        return;
+    }
+
+    // generate OTP
+    generatedOTP = Math.floor(1000 + Math.random()*9000);
+
+    alert("Demo OTP: " + generatedOTP); // ⚠️ Replace with email sending later
+
+    document.getElementById("otpBox").style.display = "block";
+    document.getElementById("msg").innerHTML = "OTP sent to your Gmail";
+}
+
+function verifyOTP(){
+
+    let userOTP = document.getElementById("otp").value;
+
+    if(userOTP == generatedOTP){
+        localStorage.setItem("adminLogin", true);
+        document.getElementById("msg").innerHTML = "✅ Login Success";
+
+        setTimeout(()=>{
+            window.location.href = "admin-dashboard.html";
+        },1000);
+
+    }else{
+        document.getElementById("msg").innerHTML = "❌ Wrong OTP";
+    }
+}
+
+</script>
+
+</body>
+</html>
